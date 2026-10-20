@@ -1,5 +1,3 @@
-Writing
-
 # Final Directive — Inbox Helper
 
 Build the smallest reliable AI-assisted inbox workflow that demonstrates deliberate engineering trade-offs.
