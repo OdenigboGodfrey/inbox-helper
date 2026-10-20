@@ -1,7 +1,3 @@
-Here is your original content with only Markdown formatting improved. I have kept the wording and content unchanged.
-
-Writing
-
 # Inbox Helper
 
 A small AI-first inbox assistant that groups candidate messages by intent and drafts short replies for human review.
