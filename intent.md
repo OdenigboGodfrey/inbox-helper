@@ -1,5 +1,3 @@
-Writing
-
 # Intent — Inbox Helper
 
 ## Problem
