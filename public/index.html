@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Submit candidate message batches and review AI drafts.">
+  <title>Inbox Helper</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/">Inbox Helper</a>
+    <div class="header-right">
+      <span id="account-label" class="muted"></span>
+      <button id="logout-button" class="button button-light" hidden>
+        Sign out
+      </button>
+      <a href="/swagger" target="_blank" rel="noreferrer">API docs</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="login-panel" class="panel login-panel">
+      <p class="eyebrow">WELCOME BACK</p>
+      <h1>Sign in to your inbox</h1>
+      <p class="muted">Use your assigned candidate or admin account.</p>
+
+      <form id="login-form">
+        <label for="email">Email address</label>
+        <input id="email" type="email"
+          autocomplete="username"
+          value="candidate@example.com" required>
+
+        <label for="password">Password</label>
+        <input id="password" type="password"
+          autocomplete="current-password"
+          value="password" required>
+
+        <button id="login-button"
+          class="button button-primary" type="submit">
+          Sign in
+        </button>
+        <p id="login-error" class="alert alert-error"
+          role="alert" hidden></p>
+      </form>
+    </section>
+
+    <section id="workspace" hidden>
+      <div class="page-heading">
+        <div>
+          <p class="eyebrow">YOUR WORKSPACE</p>
+          <h1 id="page-title">My messages</h1>
+          <p id="page-description" class="muted"></p>
+        </div>
+        <button id="refresh-button"
+          class="button button-light" type="button">
+          Refresh
+        </button>
+      </div>
+
+      <section id="compose-panel" class="panel compose-panel" hidden>
+        <div class="compose-heading">
+          <div>
+            <h2>Create a message batch</h2>
+            <p class="muted">
+              Add up to 5 messages and submit them together.
+              Your authenticated email is used as the sender.
+            </p>
+          </div>
+          <span id="batch-count" class="badge">1 / 5 messages</span>
+        </div>
+
+        <form id="message-form">
+          <div id="batch-messages">
+            <div class="batch-message">
+              <div class="batch-message-header">
+                <h3 class="batch-message-title">Message 1</h3>
+              </div>
+              <textarea id="message-body" placeholder="Type your message here... (max 500 characters)" maxlength="500" required></textarea>
+              <div class="message-editor-footer">
+                <span class="muted">0 / 500 characters</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="batch-toolbar">
+            <button id="add-message-button"
+              class="button button-light" type="button">
+              <span aria-hidden="true">+</span> Add another message
+            </button>
+            <span id="batch-character-count" class="muted">
+              0 characters total
+            </span>
+          </div>
+
+          <div class="compose-footer">
+            <span class="muted">
+              Maximum 5 messages per batch
+            </span>
+            <button id="send-button"
+              class="button button-primary" type="submit">
+              Submit batch
+            </button>
+          </div>
+
+          <p id="submit-feedback" class="alert" role="status" hidden></p>
+        </form>
+      </section>
+
+      <section class="table-section">
+        <div class="table-heading">
+          <div>
+            <h2>Conversations</h2>
+            <p id="result-count" class="muted">Loading messages...</p>
+          </div>
+          <label class="page-size-label" for="page-size">
+            Rows
+            <select id="page-size">
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+            </select>
+          </label>
+        </div>
+
+        <div id="table-error" class="alert"
+          role="alert" hidden></div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr id="table-head-row">
+                <th>Message</th>
+                <th>Intent</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="message-rows">
+              <tr>
+                <td colspan="5" class="table-placeholder">
+                  Sign in to load messages.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pagination">
+          <span id="page-info" class="muted">Page 1</span>
+          <div class="pagination-actions">
+            <button id="previous-button"
+              class="button button-light" disabled>
+              ← Previous
+            </button>
+            <button id="next-button"
+              class="button button-light" disabled>
+              Next →
+            </button>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <dialog id="review-dialog" class="review-dialog">
+    <div class="dialog-header">
+      <h2>Review conversation</h2>
+      <button id="close-dialog"
+        class="button button-light" type="button">
+        Close
+      </button>
+    </div>
+
+    <p id="review-sender" class="muted"></p>
+
+    <h3>Original message</h3>
+    <div id="review-original" class="message-content"></div>
+
+    <h3>AI-proposed reply</h3>
+    <div id="review-draft"
+      class="message-content draft-content"></div>
+
+    <p id="review-error" class="alert alert-error"
+      role="alert" hidden></p>
+
+    <div class="dialog-actions">
+      <button id="reject-button" class="button button-danger" type="button">
+        Reject
+      </button>
+      <button id="regenerate-button" class="button button-secondary regenerate" type="button">
+        Regenerate
+      </button>
+      <button id="approve-button" class="button button-primary" type="button">
+        Approve
+      </button>
+    </div>
+  </dialog>
+</body>
+</html>
