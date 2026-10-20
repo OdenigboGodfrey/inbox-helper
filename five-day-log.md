@@ -1,5 +1,3 @@
-Writing
-
 # 3-Day Execution Log: Building The Inbox Helper
 
 **Note:** While the quest timeline requested for 5 days, I compressed and shipped this production grade architecture in an intense 2 day sprint. Maximizing pressure, tightening feedback loops, and forcing rapid iteration.
