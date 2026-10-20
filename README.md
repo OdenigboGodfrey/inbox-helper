@@ -72,7 +72,7 @@ curl http://localhost:3000/api/health
 ### 5\. Submit candidate messages
 
 ```
-curl -X POST http://localhost:3000/api/inbox/batches \
+curl -X POST http://localhost:3000/api/inbox/batch \
   -H 'Content-Type: application/json' \
   -H 'request-Key: demo-batch-001' \
   -d '{
